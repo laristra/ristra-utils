@@ -26,16 +26,10 @@ endif()
 cinch_load_extras()
 
 #------------------------------------------------------------------------------#
-# Set application directory
-#------------------------------------------------------------------------------#
-
-cinch_add_application_directory(app)
-
-#------------------------------------------------------------------------------#
 # Add library targets
 #------------------------------------------------------------------------------#
 
-cinch_add_library_target(example ristraio)
+cinch_add_library_target(ristraio ristraio)
 
 #------------------------------------------------------------------------------#
 # Set header suffix regular expression

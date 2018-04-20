@@ -3,18 +3,14 @@
 # All rights reserved.
 #~----------------------------------------------------------------------------~#
 
-set(example_HEADERS
-  utils.h
+set(utils_HEADERS
+  interface.h
   PARENT_SCOPE
 )
 
-set(example_SOURCES
-  utils.cc
+set(utils_SOURCES
+  interface.cc
   PARENT_SCOPE
-)
-
-cinch_add_unit(sanity
-  SOURCES test/unit.cc
 )
 
 #----------------------------------------------------------------------------~-#
