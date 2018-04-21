@@ -1,10 +1,12 @@
 /*
-           _____       _____              _____
-    __________(_)________  /_____________ ___(_)_____
-    __  ___/_  /__  ___/  __/_  ___/  __ `/_  /_  __ \
-    _  /   _  / _(__  )/ /_ _  /   / /_/ /_  / / /_/ /
-    /_/    /_/  /____/ \__/ /_/    \__,_/ /_/  \____/
+  _____________       _____              ____________
+  ___  __ \__(_)________  /_____________ ___  /___  /
+  __  /_/ /_  /__  ___/  __/_  ___/  __ `/_  / __  /
+  _  _, _/_  / _(__  )/ /_ _  /   / /_/ /_  /___  /___
+  /_/ |_| /_/  /____/ \__/ /_/    \__,_/ /_____/_____/
 
+  Copyright (c) 2018 Los Alamos National Security, LLC
+  All rights reserved.
                                                                               */
 #pragma once
 
@@ -13,11 +15,11 @@
 #include <map>
 #include <string>
 
-namespace ristraio {
+namespace ristrall {
 namespace io {
 
-template<typename DRIVER_POLICY>
-struct interface__ : public DRIVER_POLICY
+template<typename IO_DRIVER_POLICY>
+struct interface__ : public IO_DRIVER_POLICY
 {
 
   //--------------------------------------------------------------------------//
@@ -47,7 +49,7 @@ struct interface__ : public DRIVER_POLICY
 
   /*!
     Initialize the directory structure and required header information
-    for a ristraio simulation.
+    for a ristra simulation.
 
     @param path The directory path to the location where the simulation
                 structure should reside.
@@ -76,19 +78,19 @@ private:
 }; // struct interface__
 
 } // namespace io
-} // namespace ristraio
+} // namespace ristrall
 
-// This include file defines the DRIVER_POLICY used below.
+// This include file defines the IO_DRIVER_POLICY used below.
 
-#include <ristraio/driver/ristraio_driver_policy.h>
+#include <ristrall/driver/ristrall_driver_policy.h>
 
-namespace ristraio {
+namespace ristrall {
 namespace io {
   
 /*!
  */
 
-using interface_t = interface__<RISTRAIO_DRIVER_POLICY>;
+using interface_t = interface__<RISTRALL_IO_DRIVER_POLICY>;
 
 } // namespace io
-} // namespace ristraio
+} // namespace ristrall

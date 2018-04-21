@@ -19,7 +19,7 @@ cinch_minimum_required(1.0)
 # Set the project name
 #------------------------------------------------------------------------------#
 
-project(RistraIO)
+project(RistraLL)
 
 #------------------------------------------------------------------------------#
 # Set header suffix regular expression
@@ -51,14 +51,14 @@ cinch_load_extras()
 # Add options for driver selection
 #------------------------------------------------------------------------------#
 
-set(RISTRAIO_DRIVERS design hdf5)
+set(RISTRALL_IO_DRIVERS design hdf5)
 
-if(NOT RISTRAIO_DRIVER)
-  list(GET RISTRAIO_DRIVERS 0 RISTRAIO_DRIVER)
+if(NOT RISTRALL_IO_DRIVER)
+  list(GET RISTRALL_IO_DRIVERS 0 RISTRALL_IO_DRIVER)
 endif()
 
-set(RISTRAIO_DRIVER "${RISTRAIO_DRIVER}" CACHE STRING "Select the driver")
-set_property(CACHE RISTRAIO_DRIVER PROPERTY STRINGS ${RISTRAIO_DRIVERS})
+set(RISTRALL_IO_DRIVER "${RISTRALL_IO_DRIVER}" CACHE STRING "Select the driver")
+set_property(CACHE RISTRALL_IO_DRIVER PROPERTY STRINGS ${RISTRALL_IO_DRIVERS})
 
 #------------------------------------------------------------------------------#
 # Boost Filesystem
@@ -71,11 +71,11 @@ include_directories(${Boost_INCLUDE_DIRS})
 # Add library targets
 #------------------------------------------------------------------------------#
 
-cinch_add_library_target(RistraIO ristraio EXPORT_TARGET RistraIOTargets)
-target_link_libraries(RistraIO ${Boost_LIBRARIES})
+cinch_add_library_target(RistraLL ristrall EXPORT_TARGET RistraLLTargets)
+target_link_libraries(RistraLL ${Boost_LIBRARIES})
 
 #------------------------------------------------------------------------------#
-# Prepare variables for RistraIOConfig file.
+# Prepare variables for RistraLLConfig file.
 #------------------------------------------------------------------------------#
 
 # FIXME
@@ -84,13 +84,13 @@ target_link_libraries(RistraIO ${Boost_LIBRARIES})
 # Configure header
 #------------------------------------------------------------------------------#
 
-configure_file(${PROJECT_SOURCE_DIR}/config/ristraio-config.h.in
-  ${CMAKE_BINARY_DIR}/ristraio-config.h @ONLY)
+configure_file(${PROJECT_SOURCE_DIR}/config/ristrall-config.h.in
+  ${CMAKE_BINARY_DIR}/ristrall-config.h @ONLY)
 
 include_directories(${CMAKE_BINARY_DIR})
 
 install(
-  FILES ${CMAKE_BINARY_DIR}/ristraio-config.h
+  FILES ${CMAKE_BINARY_DIR}/ristrall-config.h
   DESTINATION include
 )
 

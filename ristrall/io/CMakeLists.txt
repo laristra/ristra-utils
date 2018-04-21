@@ -1,12 +1,12 @@
 #------------------------------------------------------------------------------#
-#           _____       _____              _____
-#    __________(_)________  /_____________ ___(_)_____
-#    __  ___/_  /__  ___/  __/_  ___/  __ `/_  /_  __ \
-#    _  /   _  / _(__  )/ /_ _  /   / /_/ /_  / / /_/ /
-#    /_/    /_/  /____/ \__/ /_/    \__,_/ /_/  \____/
+#  _____________       _____              ____________
+#  ___  __ \__(_)________  /_____________ ___  /___  /
+#  __  /_/ /_  /__  ___/  __/_  ___/  __ `/_  / __  /
+#  _  _, _/_  / _(__  )/ /_ _  /   / /_/ /_  /___  /___
+#  /_/ |_| /_/  /____/ \__/ /_/    \__,_/ /_____/_____/
 #
-# Copyright (c) 2018 Los Alamos National Security, LLC
-# All rights reserved.
+#  Copyright (c) 2018 Los Alamos National Security, LLC
+#  All rights reserved.
 #------------------------------------------------------------------------------#
 
 #------------------------------------------------------------------------------#
@@ -23,7 +23,7 @@ set(io_SOURCES
   PARENT_SCOPE
 )
 
-if(RISTRAIO_DRIVER STREQUAL "design")
+if(RISTRALL_IO_DRIVER STREQUAL "design")
 
   set(io_HEADERS
     ${io_HEADERS}
@@ -35,7 +35,7 @@ if(RISTRAIO_DRIVER STREQUAL "design")
     design/driver_policy.cc
   )
 
-elseif(RISTRAIO_DRIVER STREQUAL "hdf5")
+elseif(RISTRALL_IO_DRIVER STREQUAL "hdf5")
 
 endif()
 
@@ -65,7 +65,7 @@ cinch_add_unit(interface
   SOURCES
     test/interface.cc
   LIBRARIES
-    RistraIO
+    RistraLL
   POLICY
     SERIAL
   THREADS 1

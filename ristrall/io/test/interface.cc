@@ -1,11 +1,11 @@
 /*~-------------------------------------------------------------------------~~*
- * Copyright (c) 2014 Los Alamos National Security, LLC
+ * Copyright (c) 2016 Los Alamos National Security, LLC
  * All rights reserved.
  *~-------------------------------------------------------------------------~~*/
 
 #include <cinchtest.h>
 
-#include <ristraio/io/interface.h>
+#include <ristrall/io/interface.h>
 
 TEST(interface, sanity) {
 
