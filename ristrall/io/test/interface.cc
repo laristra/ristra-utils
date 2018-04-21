@@ -5,7 +5,7 @@
 
 #include <cinchtest.h>
 
-#include <ristrall/io/interface.h>
+#include <ristrall/io/io.h>
 
 TEST(interface, sanity) {
 

@@ -48,6 +48,20 @@ struct interface__ : public IO_DRIVER_POLICY
   } // instance
 
   /*!
+    Register an I/O target.
+
+    @param key  The hash key for the target.
+    @param iofs The set of callback functions for the target.
+   */
+
+  bool register_target(size_t key, io_functions_t & iofs) {
+    
+    targets_[key] = iofs;
+
+    return true;
+  } // register_target
+
+  /*!
     Initialize the directory structure and required header information
     for a ristra simulation.
 
@@ -61,15 +75,40 @@ struct interface__ : public IO_DRIVER_POLICY
             false otherwise.
    */
 
-  bool register_target(size_t key, io_functions_t & iofs) {
-    
-    targets_[key] = iofs;
-
-    return true;
-  } // register_target
-
   bool initialize_simulation(std::string path, std::string name) {
   } // initialize_simulation
+
+  /*!
+    Checkpoint the simulation.
+
+    @param path The path to the simulation directory.
+   */
+
+  bool checkpoint(std::string & path) {
+    bool returns{true};
+
+    for(auto target: targets_) {
+      returns = returns && target->checkpoint(path);
+    } // for
+
+    return returns;
+  } // checkpoint
+
+  /*!
+    Restart the simulation.
+
+    @param path The path to the simulation directory.
+   */
+
+  bool restart(std::string & path) {
+    bool returns{true};
+
+    for(auto target: targets_) {
+      returns = returns && target->restart(path);
+    } // for
+
+    return returns;
+  } // restart
 
 private:
 
@@ -82,7 +121,7 @@ private:
 
 // This include file defines the IO_DRIVER_POLICY used below.
 
-#include <ristrall/driver/ristrall_driver_policy.h>
+#include <ristrall/io/ristrall_io_driver_policy.h>
 
 namespace ristrall {
 namespace io {

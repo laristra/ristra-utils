@@ -15,6 +15,7 @@
 
 set(io_HEADERS
   interface.h
+  ristrall_io_driver_policy.h
   PARENT_SCOPE
 )
 
@@ -36,6 +37,16 @@ if(RISTRALL_IO_DRIVER STREQUAL "design")
   )
 
 elseif(RISTRALL_IO_DRIVER STREQUAL "hdf5")
+
+  set(io_HEADERS
+    ${io_HEADERS}
+    hdf5/driver_policy.h
+  )
+
+  set(io_SOURCES
+    ${io_SOURCES}
+    hdf5/driver_policy.cc
+  )
 
 endif()
 

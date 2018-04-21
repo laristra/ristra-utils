@@ -15,7 +15,7 @@
 #include <ristrall/io/interface.h>
 
 /*!
-  Register an I/O target with the RistraIO runtime. The I/O functions
+  Register an I/O target with the RistraLL runtime. The I/O functions
   registered by each target will be invoked during I/O operations to
   generate the appropriate output.
 
@@ -28,7 +28,7 @@
                       set of callback functions for the target.
  */
 
-#define ristrall_register_target(name, io_functions)                           \
+#define ristra_register_io_target(name, io_functions)                          \
   /* MACRO IMPLEMENTATION */                                                   \
                                                                                \
   /* Call interface policy to register the target */                           \
