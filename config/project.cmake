@@ -68,19 +68,6 @@ find_package(Boost COMPONENTS filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
 #------------------------------------------------------------------------------#
-# Add library targets
-#------------------------------------------------------------------------------#
-
-cinch_add_library_target(RistraLL ristrall EXPORT_TARGET RistraLLTargets)
-target_link_libraries(RistraLL ${Boost_LIBRARIES})
-
-#------------------------------------------------------------------------------#
-# Prepare variables for RistraLLConfig file.
-#------------------------------------------------------------------------------#
-
-# FIXME
-
-#------------------------------------------------------------------------------#
 # Configure header
 #------------------------------------------------------------------------------#
 
@@ -92,6 +79,78 @@ include_directories(${CMAKE_BINARY_DIR})
 install(
   FILES ${CMAKE_BINARY_DIR}/ristrall-config.h
   DESTINATION include
+)
+
+#------------------------------------------------------------------------------#
+# Add library targets
+#------------------------------------------------------------------------------#
+
+cinch_add_library_target(RistraLL ristrall EXPORT_TARGET RistraLLTargets)
+target_link_libraries(RistraLL ${Boost_LIBRARIES})
+
+#------------------------------------------------------------------------------#
+# Prepare variables for RistraLLConfig file.
+#------------------------------------------------------------------------------#
+
+set(RISTRALL_EXTERNAL_INCLUDE_DIRS)
+
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  PROPERTY INCLUDE_DIRECTORIES)
+
+foreach(dir ${dirs})
+  if(NOT ${dir} MATCHES ${CMAKE_CURRENT_SOURCE_DIR})
+    list(APPEND RISTRALL_EXTERNAL_INCLUDE_DIRS ${dir})
+  endif()
+endforeach()
+
+set(RISTRALL_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR})
+set(RISTRALL_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include
+  ${RISTRALL_EXTERNAL_INCLUDE_DIRS})
+
+set(RISTRALL_CMAKE_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR}/cmake/RistraLL)
+
+#------------------------------------------------------------------------------#
+# Extract all project options so they can be exported to the
+# ProjectConfig.cmake file.
+#------------------------------------------------------------------------------#
+
+get_cmake_property(_variableNames VARIABLES)
+string(REGEX MATCHALL "(^|;)RISTRALL_[A-Za-z0-9_]*"
+  _matchedVars "${_variableNames}"
+)
+
+foreach(_variableName ${_matchedVars})
+  set(RISTRALL_CONFIG_CODE
+    "${RISTRALL_CONFIG_CODE}\nset(${_variableName} \"${${_variableName}}\")")
+endforeach()
+
+#------------------------------------------------------------------------------#
+# Export targets and package.
+#------------------------------------------------------------------------------#
+
+export(
+  TARGETS RistraLL
+  FILE ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/RistraLLTargets.cmake
+)
+
+export(PACKAGE RistraLL)
+
+#------------------------------------------------------------------------------#
+# CMake config file: This should be the last thing to happen.
+#------------------------------------------------------------------------------#
+
+configure_file(${PROJECT_SOURCE_DIR}/config/RistraLLConfig.cmake.in
+  ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/RistraLLConfig.cmake @ONLY)
+
+install(
+  FILES ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/RistraLLConfig.cmake
+  DESTINATION ${RISTRALL_CMAKE_DIR}
+)
+
+install(
+  EXPORT RistraLLTargets
+  DESTINATION ${RISTRALL_CMAKE_DIR}
+  COMPONENT dev
 )
 
 #----------------------------------------------------------------------------~-#
