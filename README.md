@@ -42,4 +42,11 @@ inside of a task execution, the user can depend on certain operations
 being available, although it may be neccessary to define a special I/O
 task type to insure this.
 
+For an initial example of the registry, look at
+'ristrall/io/test/registry.cc'. This file shows the basic registration
+of a set of I/O functions, which are then invoked through the runtime.
+Although currently incomplete, 'ristrall/io/interface.h' demonstrates
+the policy-based structure that can be used to select different backend
+implementations. Logic is already included for HDF5.
+
 <!-- vim: set tabstop=2 shiftwidth=2 expandtab fo=cqt tw=72 : -->
