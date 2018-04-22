@@ -17,12 +17,9 @@ set(io_HEADERS
   interface.h
   registry.h
   ristrall_io_driver_policy.h
-  PARENT_SCOPE
 )
 
 set(io_SOURCES
-  interface.cc
-  PARENT_SCOPE
 )
 
 if(RISTRALL_IO_DRIVER STREQUAL "design")
