@@ -13,6 +13,10 @@
 
 #include <ristrall/io/io.h>
 
+//----------------------------------------------------------------------------//
+// Create a type with components implemented as static methods.
+//----------------------------------------------------------------------------//
+
 struct test_target_t {
 
   static bool checkpoint(std::string & path) {
@@ -25,7 +29,23 @@ struct test_target_t {
 
 }; // struct test_target_t
 
+//----------------------------------------------------------------------------//
+// Implement components as functions.
+//----------------------------------------------------------------------------//
+
+bool untyped_checkpoint(std::string & path) {
+    std::cout << "untyped_checkpoint with " << path << std::endl;
+} // untyped_checkpoint
+
+bool untyped_restart(std::string & path) {
+    std::cout << "untyped_restart with " << path << std::endl;
+} // untyped_checkpoint
+
 using namespace ristrall::io;
+
+//----------------------------------------------------------------------------//
+// Register static method version.
+//----------------------------------------------------------------------------//
 
 ristra_register_io_target(test_target,
   ristra_io_functions(
@@ -33,6 +53,21 @@ ristra_register_io_target(test_target,
     test_target_t::restart
   )
 );
+
+//----------------------------------------------------------------------------//
+// Register function version.
+//----------------------------------------------------------------------------//
+
+ristra_register_io_target(untyped,
+  ristra_io_functions(
+    untyped_checkpoint,
+    untyped_restart
+  )
+);
+
+//----------------------------------------------------------------------------//
+// Unit test demonstrating runtime call to components.
+//----------------------------------------------------------------------------//
 
 TEST(registry, sanity) {
 
