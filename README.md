@@ -1,4 +1,4 @@
-# Ristra Low-Level Library (RistraLL)
+# Ristra Low-Level (RistraLL) Library
 
 The RistraLL project provides I/O and other low-level utilities for the
 Ristra project.
