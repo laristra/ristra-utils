@@ -22,45 +22,6 @@ template<typename IO_DRIVER_POLICY>
 struct interface__ : public IO_DRIVER_POLICY
 {
 
-  //--------------------------------------------------------------------------//
-  // Define function types for I/O interface.
-  //--------------------------------------------------------------------------//
-
-  using checkpoint_function_t = std::function<bool(std::string &)>;
-  using restart_function_t = std::function<bool(std::string &)>;
-
-  /*!
-    Function types for registration interface and callbacks.
-   */
-
-  struct io_functions_t {
-    checkpoint_function_t checkpoint;
-    restart_function_t restart;
-  }; // functions_t
-
-  /*!
-    Return the singleton instance of the interface__ type.
-   */
-
-  static interface__ & instance() {
-    static interface__ _if;
-    return _if;
-  } // instance
-
-  /*!
-    Register an I/O target.
-
-    @param key  The hash key for the target.
-    @param iofs The set of callback functions for the target.
-   */
-
-  bool register_target(size_t key, io_functions_t & iofs) {
-    
-    targets_[key] = iofs;
-
-    return true;
-  } // register_target
-
   /*!
     Initialize the directory structure and required header information
     for a ristra simulation.
@@ -77,42 +38,6 @@ struct interface__ : public IO_DRIVER_POLICY
 
   bool initialize_simulation(std::string path, std::string name) {
   } // initialize_simulation
-
-  /*!
-    Checkpoint the simulation.
-
-    @param path The path to the simulation directory.
-   */
-
-  bool checkpoint(std::string & path) {
-    bool returns{true};
-
-    for(auto target: targets_) {
-      returns = returns && target->checkpoint(path);
-    } // for
-
-    return returns;
-  } // checkpoint
-
-  /*!
-    Restart the simulation.
-
-    @param path The path to the simulation directory.
-   */
-
-  bool restart(std::string & path) {
-    bool returns{true};
-
-    for(auto target: targets_) {
-      returns = returns && target->restart(path);
-    } // for
-
-    return returns;
-  } // restart
-
-private:
-
-  std::map<size_t, io_functions_t> targets_;
 
 }; // struct interface__
 

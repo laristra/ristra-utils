@@ -13,6 +13,20 @@
 /*! @file */
 
 #include <ristrall/io/interface.h>
+#include <ristrall/io/registry.h>
+#include <ristrall/utils/const_string.h>
+
+/*!
+  Create an instance of the registry_t::io_functions_t type suitable
+  for passing to ristra_register_io_target.
+
+  @param ... A variadic argument list of io functions.
+ */
+
+#define ristra_io_functions(...)                                               \
+  /* MACRO IMPLEMENTATION */                                                   \
+                                                                               \
+  ristrall::io::registry_t::io_functions_t(__VA_ARGS__)
 
 /*!
   Register an I/O target with the RistraLL runtime. The I/O functions
@@ -33,6 +47,31 @@
                                                                                \
   /* Call interface policy to register the target */                           \
   bool ristrall_target_##name##_registered =                                   \
-    ristrall::io::interface_t::register_target(                                \
-      ristrall::utils::const_string_t{EXPAND_AND_STRINGIFY(nspace)}.hash(),    \
-      io_functions)
+    ristrall::io::registry_t::instance().register_target(                      \
+      ristrall::utils::const_string_t{                                         \
+        RISTRALL_EXPAND_AND_STRINGIFY(name)                                    \
+      }.hash(),                                                                \
+      io_functions                                                             \
+    )
+
+/*!
+  Invoke the checkpoint method for each of the registered targets.
+
+  @param path The path to the simulation directory.
+ */
+
+#define ristra_checkpoint(path)                                                \
+  /* MACRO IMPLEMENTATION */                                                   \
+                                                                               \
+  ristrall::io::registry_t::instance().checkpoint(path)
+
+/*!
+  Invoke the restart method for each of the registered targets.
+
+  @param path The path to the simulation directory.
+ */
+
+#define ristra_restart(path)                                                   \
+  /* MACRO IMPLEMENTATION */                                                   \
+                                                                               \
+  ristrall::io::registry_t::instance().restart(path)

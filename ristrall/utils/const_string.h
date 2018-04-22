@@ -9,6 +9,9 @@
 #include <limits>
 #include <stdexcept>
 
+#define RISTRALL_UTIL_STRINGIFY(s) #s
+#define RISTRALL_EXPAND_AND_STRINGIFY(s) RISTRALL_UTIL_STRINGIFY(s)
+
 namespace ristrall {
 namespace utils {
 
@@ -56,7 +59,7 @@ public:
   //! Return the hash for the string literal.
   //!
   constexpr hash_type_t hash() const {
-    return flecsi::utils::string_hash<hash_type_t>(str_, size_);
+    return ristrall::utils::string_hash<hash_type_t>(str_, size_);
   } // hash
 
 private:
