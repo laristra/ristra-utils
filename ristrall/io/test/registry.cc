@@ -47,7 +47,7 @@ using namespace ristrall::io;
 // Register static method version.
 //----------------------------------------------------------------------------//
 
-ristra_register_io_target(test_target,
+ristra_register_io_target(topology, test_target,
   ristra_io_functions(
     test_target_t::checkpoint,
     test_target_t::restart
@@ -58,7 +58,7 @@ ristra_register_io_target(test_target,
 // Register function version.
 //----------------------------------------------------------------------------//
 
-ristra_register_io_target(untyped,
+ristra_register_io_target(topology, untyped,
   ristra_io_functions(
     untyped_checkpoint,
     untyped_restart

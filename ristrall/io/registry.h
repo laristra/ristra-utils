@@ -21,6 +21,21 @@ namespace io {
 struct registry_t
 {
 
+  /*!
+    The target_type_t allows coarse-grained sorting of I/O targets
+    by type, in addition to the fine-grained key-based sorting that
+    is the std::map default. Targets can be loosely sorted into types
+    that then have a deterministic ordering because of the const_string_t
+    hashing function.
+   */
+
+  enum target_type_t : size_t {
+    simulation,
+    topology,
+    package,
+    analysis
+  }; // enum target_type_t
+
   //--------------------------------------------------------------------------//
   // Define function types for I/O registry.
   //--------------------------------------------------------------------------//
@@ -64,9 +79,11 @@ struct registry_t
     @param iofs The set of callback functions for the target.
    */
 
-  bool register_target(size_t key, io_functions_t const & iofs) {
+  bool register_target(target_type_t type, size_t key,
+    io_functions_t const & iofs) {
     
-    targets_[key] = iofs;
+    std::cout << "(type,key): " << type << " " << key << std::endl;
+    targets_[std::make_pair(type, key)] = iofs;
 
     return true;
   } // register_target
@@ -105,7 +122,29 @@ struct registry_t
 
 private:
 
-  std::map<size_t, io_functions_t> targets_;
+  using target_key_t = std::pair<size_t, size_t>;
+
+  /*
+    This comparison operator will sort targets by increasing
+    target_type_t, and then by hash key.
+   */
+
+  struct target_compare_t {
+    bool operator () (target_key_t const & a, target_key_t const & b) const {
+
+      return
+        a.first < b.first ?
+          true
+        :
+        a.first == b.first ?
+          a.second < b.second
+        :
+          false;
+        
+    } // operator ()
+  }; // struct target_compare_t
+
+  std::map<target_key_t, io_functions_t, target_compare_t> targets_;
 
 }; // struct registry_t
 

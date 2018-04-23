@@ -42,12 +42,13 @@
                       set of callback functions for the target.
  */
 
-#define ristra_register_io_target(name, io_functions)                          \
+#define ristra_register_io_target(type, name, io_functions)                    \
   /* MACRO IMPLEMENTATION */                                                   \
                                                                                \
   /* Call interface policy to register the target */                           \
   bool ristrall_target_##name##_registered =                                   \
     ristrall::io::registry_t::instance().register_target(                      \
+      ristrall::io::registry_t::target_type_t::type,                           \
       ristrall::utils::const_string_t{                                         \
         RISTRALL_EXPAND_AND_STRINGIFY(name)                                    \
       }.hash(),                                                                \
