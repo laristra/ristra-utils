@@ -37,6 +37,7 @@ struct interface__ : public IO_DRIVER_POLICY
    */
 
   bool initialize_simulation(std::string path, std::string name) {
+    return true;
   } // initialize_simulation
 
 }; // struct interface__

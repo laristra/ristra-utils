@@ -21,10 +21,12 @@ struct test_target_t {
 
   static bool checkpoint(std::string & path) {
     std::cout << "test_target_t calling checkpoint with " << path << std::endl;
+    return true;
   } // checkpoint
 
   static bool restart(std::string & path) {
     std::cout << "test_target_t calling restart with " << path << std::endl;
+    return true;
   } // checkpoint
 
 }; // struct test_target_t
@@ -35,10 +37,12 @@ struct test_target_t {
 
 bool untyped_checkpoint(std::string & path) {
     std::cout << "untyped_checkpoint with " << path << std::endl;
+    return true;
 } // untyped_checkpoint
 
 bool untyped_restart(std::string & path) {
     std::cout << "untyped_restart with " << path << std::endl;
+    return true;
 } // untyped_checkpoint
 
 using namespace ristrall::io;
