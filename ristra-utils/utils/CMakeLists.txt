@@ -1,7 +1,7 @@
-#~----------------------------------------------------------------------------~#
+#------------------------------------------------------------------------------#
 # Copyright (c) 2014 Los Alamos National Security, LLC
 # All rights reserved.
-#~----------------------------------------------------------------------------~#
+#------------------------------------------------------------------------------#
 
 set(utils_HEADERS
   hash.h
@@ -17,7 +17,21 @@ set(utils_SOURCES
   PARENT_SCOPE
 )
 
-#----------------------------------------------------------------------------~-#
-# Formatting options for vim.
-# vim: set tabstop=2 shiftwidth=2 expandtab :
-#----------------------------------------------------------------------------~-#
+#------------------------------------------------------------------------------#
+# Unit tests.
+#------------------------------------------------------------------------------#
+
+#cinch_add_unit(dag
+#  SOURCES test/dag.cc
+#  LIBRARIES ${FLECSI_LIBRARY_DEPENDENCIES}
+#)
+
+#cinch_add_unit(const_string
+#  SOURCES test/const_string.cc common.cc
+#  FOLDER "Tests/Util"
+#)
+
+#cinch_add_unit(hash
+#  SOURCES test/hash.cc
+#  FOLDER "Tests/Util"
+#)
