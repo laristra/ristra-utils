@@ -1,9 +1,9 @@
 /*
-  _____________       _____              ____________
-  ___  __ \__(_)________  /_____________ ___  /___  /
-  __  /_/ /_  /__  ___/  __/_  ___/  __ `/_  / __  /
-  _  _, _/_  / _(__  )/ /_ _  /   / /_/ /_  /___  /___
-  /_/ |_| /_/  /____/ \__/ /_/    \__,_/ /_____/_____/
+  _____________       _____              _____  _________________
+  ___  __ \__(_)________  /_____________ __  / / /_  /___(_)__  /_______
+  __  /_/ /_  /__  ___/  __/_  ___/  __ `/  / / /_  __/_  /__  /__  ___/
+  _  _, _/_  / _(__  )/ /_ _  /   / /_/ // /_/ / / /_ _  / _  / _(__  )
+  /_/ |_| /_/  /____/ \__/ /_/    \__,_/ \____/  \__/ /_/  /_/  /____/
 
   Copyright (c) 2018 Los Alamos National Security, LLC
   All rights reserved.
@@ -15,7 +15,7 @@
 #include <map>
 #include <string>
 
-namespace ristrall {
+namespace ristra {
 namespace io {
 
 template<typename IO_DRIVER_POLICY>
@@ -43,19 +43,19 @@ struct interface__ : public IO_DRIVER_POLICY
 }; // struct interface__
 
 } // namespace io
-} // namespace ristrall
+} // namespace ristra
 
 // This include file defines the IO_DRIVER_POLICY used below.
 
-#include <ristrall/io/ristrall_io_driver_policy.h>
+#include <ristra-utils/io/ristra_io_driver_policy.h>
 
-namespace ristrall {
+namespace ristra {
 namespace io {
   
 /*!
  */
 
-using interface_t = interface__<RISTRALL_IO_DRIVER_POLICY>;
+using interface_t = interface__<RISTRA_IO_DRIVER_POLICY>;
 
 } // namespace io
-} // namespace ristrall
+} // namespace ristra

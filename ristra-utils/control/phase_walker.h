@@ -15,17 +15,17 @@
 
 /*! @file */
 
-#include <flecsi/utils/tuple_walker.h>
-#include <flecsi/utils/common.h>
-#include <flecsi/utils/const_string.h>
+#include <ristra-utils/utils/tuple_walker.h>
+#include <ristra-utils/utils/const_string.h>
+#include <ristra-utils/utils/typeify.h>
 
-#include <flecsi-config.h>
+#include <ristra-utils-config.h>
 
-#if defined(FLECSI_ENABLE_GRAPHVIZ)
-#include <flecsi/utils/graphviz.h>
+#if defined(RISTRA_ENABLE_GRAPHVIZ)
+#include <ristra-utils/utils/graphviz.h>
 #endif
 
-namespace flecsi {
+namespace ristra {
 namespace control {
 
 /*!
@@ -33,7 +33,7 @@ namespace control {
  */
 
 template<size_t PHASE>
-using phase_ = flecsi::utils::typeify<size_t, PHASE>;
+using phase_ = ristra::utils::typeify__<size_t, PHASE>;
 
 /*!
   Allow users to define cyclic control points. Cycles can be nested.
@@ -68,7 +68,7 @@ struct cycle__ {
 
 template<typename CONTROL_POLICY>
 struct phase_walker__
-  : public flecsi::utils::tuple_walker__<phase_walker__<CONTROL_POLICY>>
+  : public ristra::utils::tuple_walker__<phase_walker__<CONTROL_POLICY>>
 {
   phase_walker__(int argc, char ** argv) : argc_(argc), argv_(argv) {}
 
@@ -122,7 +122,7 @@ private:
 
 }; // struct phase_walker__
 
-#if defined(FLECSI_ENABLE_GRAPHVIZ)
+#if defined(RISTRA_ENABLE_GRAPHVIZ)
 
 /*!
   The phase_writer__ class allows execution of statically-defined
@@ -131,9 +131,9 @@ private:
 
 template<typename CONTROL_POLICY>
 struct phase_writer__
-  : public flecsi::utils::tuple_walker__<phase_writer__<CONTROL_POLICY>>
+  : public ristra::utils::tuple_walker__<phase_writer__<CONTROL_POLICY>>
 {
-  using graphviz_t = flecsi::utils::graphviz_t;
+  using graphviz_t = ristra::utils::graphviz_t;
 
   phase_writer__(graphviz_t & gv) : gv_(gv) {}
 
@@ -218,7 +218,7 @@ private:
 
 }; // struct phase_writer__
 
-#endif // FLECSI_ENABLE_GRAPHVIZ
+#endif // RISTRA_ENABLE_GRAPHVIZ
 
 } // namespace control
-} // namespace flecsi
+} // namespace ristra

@@ -11,7 +11,7 @@
 
 #include <cinchtest.h>
 
-#include <ristrall/io/io.h>
+#include <ristra-utils/io/io.h>
 
 //----------------------------------------------------------------------------//
 // Create a type with components implemented as static methods.
@@ -45,7 +45,7 @@ bool untyped_restart(std::string & path) {
     return true;
 } // untyped_checkpoint
 
-using namespace ristrall::io;
+using namespace ristra::io;
 
 //----------------------------------------------------------------------------//
 // Register static method version.

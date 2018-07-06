@@ -1,9 +1,9 @@
 /*
-  _____________       _____              ____________ 
-  ___  __ \__(_)________  /_____________ ___  /___  / 
-  __  /_/ /_  /__  ___/  __/_  ___/  __ `/_  / __  /  
-  _  _, _/_  / _(__  )/ /_ _  /   / /_/ /_  /___  /___
-  /_/ |_| /_/  /____/ \__/ /_/    \__,_/ /_____/_____/
+  _____________       _____              _____  _________________
+  ___  __ \__(_)________  /_____________ __  / / /_  /___(_)__  /_______
+  __  /_/ /_  /__  ___/  __/_  ___/  __ `/  / / /_  __/_  /__  /__  ___/
+  _  _, _/_  / _(__  )/ /_ _  /   / /_/ // /_/ / / /_ _  / _  / _(__  )
+  /_/ |_| /_/  /____/ \__/ /_/    \__,_/ \____/  \__/ /_/  /_/  /____/
 
   Copyright (c) 2018 Los Alamos National Security, LLC
   All rights reserved.
@@ -12,9 +12,13 @@
 
 /*! @file */
 
-#include <ristrall/io/interface.h>
-#include <ristrall/io/registry.h>
-#include <ristrall/utils/const_string.h>
+namespace ristra {
+
+} // namespace ristra
+#include <ristra-utils/io/interface.h>
+#include <ristra-utils/io/registry.h>
+#include <ristra-utils/utils/const_string.h>
+#include <ristra-utils/utils/macros.h>
 
 /*!
   Create an instance of the registry_t::io_functions_t type suitable
@@ -26,10 +30,10 @@
 #define ristra_io_functions(...)                                               \
   /* MACRO IMPLEMENTATION */                                                   \
                                                                                \
-  ristrall::io::registry_t::io_functions_t(__VA_ARGS__)
+  ristra::io::registry_t::io_functions_t(__VA_ARGS__)
 
 /*!
-  Register an I/O target with the RistraLL runtime. The I/O functions
+  Register an I/O target with the Ristra runtime. The I/O functions
   registered by each target will be invoked during I/O operations to
   generate the appropriate output.
 
@@ -46,11 +50,11 @@
   /* MACRO IMPLEMENTATION */                                                   \
                                                                                \
   /* Call interface policy to register the target */                           \
-  bool ristrall_target_##name##_registered =                                   \
-    ristrall::io::registry_t::instance().register_target(                      \
-      ristrall::io::registry_t::target_type_t::type,                           \
-      ristrall::utils::const_string_t{                                         \
-        RISTRALL_EXPAND_AND_STRINGIFY(name)                                    \
+  bool ristra_target_##name##_registered =                                     \
+    ristra::io::registry_t::instance().register_target(                        \
+      ristra::io::registry_t::target_type_t::type,                             \
+      ristra::utils::const_string_t{                                           \
+        EXPAND_AND_STRINGIFY(name)                                             \
       }.hash(),                                                                \
       io_functions                                                             \
     )
@@ -64,7 +68,7 @@
 #define ristra_checkpoint(path)                                                \
   /* MACRO IMPLEMENTATION */                                                   \
                                                                                \
-  ristrall::io::registry_t::instance().checkpoint(path)
+  ristra::io::registry_t::instance().checkpoint(path)
 
 /*!
   Invoke the restart method for each of the registered targets.
@@ -75,4 +79,4 @@
 #define ristra_restart(path)                                                   \
   /* MACRO IMPLEMENTATION */                                                   \
                                                                                \
-  ristrall::io::registry_t::instance().restart(path)
+  ristra::io::registry_t::instance().restart(path)

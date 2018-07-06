@@ -1,6 +1,6 @@
-# Ristra Low-Level (RistraLL) Library
+# Ristra Utils Library
 
-The RistraLL project provides I/O and other low-level utilities for the
+The Ristra Utils project provides I/O and other low-level utilities for the
 Ristra project.
 
 # I/O Model

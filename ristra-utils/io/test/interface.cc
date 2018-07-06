@@ -11,7 +11,7 @@
 
 #include <cinchtest.h>
 
-#include <ristrall/io/io.h>
+#include <ristra-utils/io/io.h>
 
 TEST(interface, sanity) {
 

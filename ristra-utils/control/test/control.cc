@@ -1,14 +1,21 @@
-/*~-------------------------------------------------------------------------~~*
- * Copyright (c) 2014 Los Alamos National Security, LLC
- * All rights reserved.
- *~-------------------------------------------------------------------------~~*/
+/*
+  _____________       _____              _____  _________________
+  ___  __ \__(_)________  /_____________ __  / / /_  /___(_)__  /_______
+  __  /_/ /_  /__  ___/  __/_  ___/  __ `/  / / /_  __/_  /__  /__  ___/
+  _  _, _/_  / _(__  )/ /_ _  /   / /_/ // /_/ / / /_ _  / _  / _(__  )
+  /_/ |_| /_/  /____/ \__/ /_/    \__,_/ \____/  \__/ /_/  /_/  /____/
+
+  Copyright (c) 2018 Los Alamos National Security, LLC
+  All rights reserved.
+                                                                              */
 
 #include <bitset>
 #include <tuple>
 
 #include <cinchtest.h>
-#include <flecsi/control/control.h>
-#include <flecsi/control/phase_walker.h>
+#include <ristra-utils/control/control.h>
+#include <ristra-utils/control/phase_walker.h>
+#include <ristra-utils/utils/macros.h>
 
 /*----------------------------------------------------------------------------*
  * Define simulation phases. This is considered part of the specializeation.
@@ -37,7 +44,7 @@ enum action_attributes_t : size_t {
  * Control policy (part of specialization).
  *----------------------------------------------------------------------------*/
 
-using namespace flecsi::control;
+using namespace ristra::control;
 
 struct control_policy_t {
 
@@ -115,7 +122,7 @@ using control_t = control__<control_policy_t>;
  *----------------------------------------------------------------------------*/
 
 #if defined(FLECSI_ENABLE_GRAPHVIZ)
-using graphviz_t = flecsi::utils::graphviz_t;
+using graphviz_t = ristra::utils::graphviz_t;
 #endif
 
 #define define_action(name)                                                    \
@@ -142,14 +149,14 @@ define_action(super_duper)
   bool name##_registered = control_t::instance().phase_map(                    \
     phase, EXPAND_AND_STRINGIFY(phase)).                                       \
     initialize_node({                                                          \
-      flecsi::utils::const_string_t{EXPAND_AND_STRINGIFY(name)}.hash(),        \
+      ristra::utils::const_string_t{EXPAND_AND_STRINGIFY(name)}.hash(),        \
       EXPAND_AND_STRINGIFY(name),                                              \
       action, 0 });
 
 #define add_dependency(phase, to, from)                                        \
   bool registered_##to##from = control_t::instance().phase_map(phase).         \
-    add_edge(flecsi::utils::const_string_t{EXPAND_AND_STRINGIFY(to)}.hash(),   \
-      flecsi::utils::const_string_t{EXPAND_AND_STRINGIFY(from)}.hash())
+    add_edge(ristra::utils::const_string_t{EXPAND_AND_STRINGIFY(to)}.hash(),   \
+      ristra::utils::const_string_t{EXPAND_AND_STRINGIFY(from)}.hash())
 
 /*----------------------------------------------------------------------------*
  * These define the control point actions and DAG dependencies.

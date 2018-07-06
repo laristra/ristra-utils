@@ -1,9 +1,9 @@
 /*
-  _____________       _____              ____________
-  ___  __ \__(_)________  /_____________ ___  /___  /
-  __  /_/ /_  /__  ___/  __/_  ___/  __ `/_  / __  /
-  _  _, _/_  / _(__  )/ /_ _  /   / /_/ /_  /___  /___
-  /_/ |_| /_/  /____/ \__/ /_/    \__,_/ /_____/_____/
+  _____________       _____              _____  _________________
+  ___  __ \__(_)________  /_____________ __  / / /_  /___(_)__  /_______
+  __  /_/ /_  /__  ___/  __/_  ___/  __ `/  / / /_  __/_  /__  /__  ___/
+  _  _, _/_  / _(__  )/ /_ _  /   / /_/ // /_/ / / /_ _  / _  / _(__  )
+  /_/ |_| /_/  /____/ \__/ /_/    \__,_/ \____/  \__/ /_/  /_/  /____/
 
   Copyright (c) 2018 Los Alamos National Security, LLC
   All rights reserved.
@@ -12,29 +12,29 @@
 
 /*! @file */
 
-#include <ristrall-config.h>
+#include <ristra-utils-config.h>
 
 //----------------------------------------------------------------------------//
 // This section works with the build system to select the correct driver
 // implemenation for the I/O model. If you add to the possible drivers,
 // remember to edit config/packages.cmake to include a definition using
-// the same convention, e.g., -DRISTRALL_IO_DRIVER_new_driver.
+// the same convention, e.g., -DRISTRA_IO_DRIVER_new_driver.
 //----------------------------------------------------------------------------//
 
 // HDF5 Policy
-#if RISTRALL_IO_DRIVER == RISTRALL_IO_DRIVER_hdf5
+#if RISTRA_IO_DRIVER == RISTRA_IO_DRIVER_hdf5
 
-#include <ristrall/io/hdf5/driver_policy.h>
+#include <ristra-utils/io/hdf5/driver_policy.h>
 
-namespace ristrall {
+namespace ristra {
 namespace io {
 
-using RISTRALL_IO_DRIVER_POLICY = hdf5_driver_policy_t;
+using RISTRA_IO_DRIVER_POLICY = hdf5_driver_policy_t;
 
 } // namespace io
-} // namespace ristrall
+} // namespace ristra
 
-#elif RISTRALL_IO_DRIVER == RISTRALL_IO_DRIVER_design
+#elif RISTRA_IO_DRIVER == RISTRA_IO_DRIVER_design
 
 //----------------------------------------------------------------------------//
 // THIS DRIVER IS INCLUDED TO AID IN INTERFACE DESIGN AND DEVELOPMENT. IT IS
@@ -43,14 +43,14 @@ using RISTRALL_IO_DRIVER_POLICY = hdf5_driver_policy_t;
 // FROM THEIR BODY!!!
 //----------------------------------------------------------------------------//
 
-#include <ristrall/io/design/driver_policy.h>
+#include <ristra-utils/io/design/driver_policy.h>
 
-namespace ristrall {
+namespace ristra {
 namespace io {
 
-using RISTRALL_IO_DRIVER_POLICY = design_driver_policy_t;
+using RISTRA_IO_DRIVER_POLICY = design_driver_policy_t;
 
 } // namespace io
-} // namespace ristrall
+} // namespace ristra
 
 #endif

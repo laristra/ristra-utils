@@ -1,12 +1,9 @@
 /*
-    @@@@@@@@  @@           @@@@@@   @@@@@@@@ @@
-   /@@/////  /@@          @@////@@ @@////// /@@
-   /@@       /@@  @@@@@  @@    // /@@       /@@
-   /@@@@@@@  /@@ @@///@@/@@       /@@@@@@@@@/@@
-   /@@////   /@@/@@@@@@@/@@       ////////@@/@@
-   /@@       /@@/@@//// //@@    @@       /@@/@@
-   /@@       @@@//@@@@@@ //@@@@@@  @@@@@@@@ /@@
-   //       ///  //////   //////  ////////  //
+   _____________       _____              _____  _________________
+   ___  __ \__(_)________  /_____________ __  / / /_  /___(_)__  /_______
+   __  /_/ /_  /__  ___/  __/_  ___/  __ `/  / / /_  __/_  /__  /__  ___/
+   _  _, _/_  / _(__  )/ /_ _  /   / /_/ // /_/ / / /_ _  / _  / _(__  )
+   /_/ |_| /_/  /____/ \__/ /_/    \__,_/ \____/  \__/ /_/  /_/  /____/
 
    Copyright (c) 2016, Los Alamos National Security, LLC
    All rights reserved.
@@ -19,12 +16,12 @@
 #include <map>
 #include <vector>
 
-#include <flecsi/control/phase_walker.h>
-#include <flecsi/utils/dag.h>
+#include <ristra-utils/control/phase_walker.h>
+#include <ristra-utils/utils/dag.h>
 
-#include <flecsi-config.h>
+#include <ristra-utils-config.h>
 
-namespace flecsi {
+namespace ristra {
 namespace control {
 
 /*!
@@ -38,7 +35,7 @@ struct control__ : public CONTROL_POLICY {
     return c;
   } // instance
 
-  using dag_t = flecsi::utils::dag__<typename CONTROL_POLICY::node_t>;
+  using dag_t = ristra::utils::dag__<typename CONTROL_POLICY::node_t>;
   using node_t = typename dag_t::node_t;
   using phase_walker_t = phase_walker__<control__<CONTROL_POLICY>>;
 
@@ -50,7 +47,7 @@ struct control__ : public CONTROL_POLICY {
 
 #if defined(FLECSI_ENABLE_GRAPHVIZ)
   using phase_writer_t = phase_writer__<control__<CONTROL_POLICY>>;
-  using graphviz_t = flecsi::utils::graphviz_t;
+  using graphviz_t = ristra::utils::graphviz_t;
 
   void write(graphviz_t & gv) {
     sort_phases();
@@ -100,5 +97,5 @@ private:
 
 }; // control__
 
-} // namespace flecsi
+} // namespace ristra
 } // namespace control

@@ -10,26 +10,82 @@
 #------------------------------------------------------------------------------#
 
 #------------------------------------------------------------------------------#
-# RistraLL options.
-#------------------------------------------------------------------------------#
-@RISTRALL_CONFIG_CODE@
-
-#------------------------------------------------------------------------------#
-# Set the path to the FleCSI headers.
+# Add header and source files.
 #------------------------------------------------------------------------------#
 
-set(RistraLL_INCLUDE_DIRS @RISTRALL_INCLUDE_DIRS@)
+set(io_HEADERS
+  interface.h
+  registry.h
+  ristra_io_driver_policy.h
+)
 
-#------------------------------------------------------------------------------#
-# RistraLL library dependencies (contains definitions for IMPORTED targets)
-#------------------------------------------------------------------------------#
+set(io_SOURCES
+)
 
-if(NOT TARGET RistraLL AND NOT RistraLL_BINARY_DIR)
-  include(@RISTRALL_CMAKE_DIR@/RistraLLTargets.cmake)
+if(RISTRA_IO_DRIVER STREQUAL "design")
+
+  set(io_HEADERS
+    ${io_HEADERS}
+    design/driver_policy.h
+  )
+
+  set(io_SOURCES
+    ${io_SOURCES}
+    design/driver_policy.cc
+  )
+
+elseif(RISTRA_IO_DRIVER STREQUAL "hdf5")
+
+  set(io_HEADERS
+    ${io_HEADERS}
+    hdf5/driver_policy.h
+  )
+
+  set(io_SOURCES
+    ${io_SOURCES}
+    hdf5/driver_policy.cc
+  )
+
 endif()
 
 #------------------------------------------------------------------------------#
-# Set the FleCSI libraries.
+# Export header list to parent scope.
 #------------------------------------------------------------------------------#
 
-set(RistraLL_LIBRARIES RistraLL)
+set(io_HEADERS
+  ${io_HEADERS}
+  PARENT_SCOPE
+)
+
+#------------------------------------------------------------------------------#
+# Export source list to parent scope.
+#------------------------------------------------------------------------------#
+
+set(io_SOURCES
+  ${io_SOURCES}
+  PARENT_SCOPE
+)
+
+#------------------------------------------------------------------------------#
+# Unit tests
+#------------------------------------------------------------------------------#
+
+cinch_add_unit(interface
+  SOURCES
+    test/interface.cc
+  LIBRARIES
+    RistraUtils
+  POLICY
+    SERIAL
+  THREADS 1
+)
+
+cinch_add_unit(registry
+  SOURCES
+    test/registry.cc
+  LIBRARIES
+    RistraUtils
+  POLICY
+    SERIAL
+  THREADS 1
+)
