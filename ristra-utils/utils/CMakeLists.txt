@@ -7,6 +7,7 @@ set(utils_HEADERS
   hash.h
   const_string.h
   dag.h
+  demangle.h
   graphviz.h
   macros.h
   tuple_walker.h
@@ -15,6 +16,7 @@ set(utils_HEADERS
 )
 
 set(utils_SOURCES
+  demangle.cc
   PARENT_SCOPE
 )
 
