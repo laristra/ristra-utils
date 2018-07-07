@@ -55,7 +55,7 @@ namespace io {
 /*!
  */
 
-using interface_t = interface__<RISTRA_IO_DRIVER_POLICY>;
+using interface_t = interface__<RISTRAUTILS_IO_DRIVER_POLICY>;
 
 } // namespace io
 } // namespace ristra

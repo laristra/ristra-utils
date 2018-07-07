@@ -51,16 +51,16 @@ cinch_load_extras()
 # Add options for driver selection
 #------------------------------------------------------------------------------#
 
-set(RISTRA_IO_DRIVERS design hdf5)
+set(RISTRAUTILS_IO_DRIVERS design hdf5)
 
-if(NOT RISTRA_IO_DRIVER)
-  list(GET RISTRA_IO_DRIVERS 0 RISTRA_IO_DRIVER)
+if(NOT RISTRAUTILS_IO_DRIVER)
+  list(GET RISTRAUTILS_IO_DRIVERS 0 RISTRAUTILS_IO_DRIVER)
 endif()
 
-set(RISTRA_IO_DRIVER "${RISTRA_IO_DRIVER}" CACHE STRING
+set(RISTRAUTILS_IO_DRIVER "${RISTRAUTILS_IO_DRIVER}" CACHE STRING
   "Select the driver")
-set_property(CACHE RISTRA_IO_DRIVER PROPERTY STRINGS
-  ${RISTRA_IO_DRIVERS})
+set_property(CACHE RISTRAUTILS_IO_DRIVER PROPERTY STRINGS
+  ${RISTRAUTILS_IO_DRIVERS})
 
 #------------------------------------------------------------------------------#
 # Boost Filesystem
@@ -95,22 +95,22 @@ target_link_libraries(RistraUtils ${Boost_LIBRARIES})
 # Prepare variables for RistraUtilsConfig file.
 #------------------------------------------------------------------------------#
 
-set(RISTRA_EXTERNAL_INCLUDE_DIRS)
+set(RISTRAUTILS_EXTERNAL_INCLUDE_DIRS)
 
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   PROPERTY INCLUDE_DIRECTORIES)
 
 foreach(dir ${dirs})
   if(NOT ${dir} MATCHES ${CMAKE_CURRENT_SOURCE_DIR})
-    list(APPEND RISTRA_EXTERNAL_INCLUDE_DIRS ${dir})
+    list(APPEND RISTRAUTILS_EXTERNAL_INCLUDE_DIRS ${dir})
   endif()
 endforeach()
 
-set(RISTRA_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR})
-set(RISTRA_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include
-  ${RISTRA_EXTERNAL_INCLUDE_DIRS})
+set(RISTRAUTILS_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR})
+set(RISTRAUTILS_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include
+  ${RISTRAUTILS_EXTERNAL_INCLUDE_DIRS})
 
-set(RISTRA_CMAKE_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR}/cmake/RistraUtils)
+set(RISTRAUTILS_CMAKE_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR}/cmake/RistraUtils)
 
 #------------------------------------------------------------------------------#
 # Extract all project options so they can be exported to the
@@ -118,13 +118,13 @@ set(RISTRA_CMAKE_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR}/cmake/RistraUtils)
 #------------------------------------------------------------------------------#
 
 get_cmake_property(_variableNames VARIABLES)
-string(REGEX MATCHALL "(^|;)RISTRA_[A-Za-z0-9_]*"
+string(REGEX MATCHALL "(^|;)RISTRAUTILS_[A-Za-z0-9_]*"
   _matchedVars "${_variableNames}"
 )
 
 foreach(_variableName ${_matchedVars})
-  set(RISTRA_CONFIG_CODE
-    "${RISTRA_CONFIG_CODE}\nset(${_variableName} \"${${_variableName}}\")")
+  set(RISTRAUTILS_CONFIG_CODE
+    "${RISTRAUTILS_CONFIG_CODE}\nset(${_variableName} \"${${_variableName}}\")")
 endforeach()
 
 #------------------------------------------------------------------------------#
@@ -147,12 +147,12 @@ configure_file(${PROJECT_SOURCE_DIR}/config/RistraUtilsConfig.cmake.in
 
 install(
   FILES ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/RistraUtilsConfig.cmake
-  DESTINATION ${RISTRA_CMAKE_DIR}
+  DESTINATION ${RISTRAUTILS_CMAKE_DIR}
 )
 
 install(
   EXPORT RistraUtilsTargets
-  DESTINATION ${RISTRA_CMAKE_DIR}
+  DESTINATION ${RISTRAUTILS_CMAKE_DIR}
   COMPONENT dev
 )
 

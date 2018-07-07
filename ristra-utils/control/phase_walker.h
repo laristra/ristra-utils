@@ -21,7 +21,7 @@
 
 #include <ristra-utils-config.h>
 
-#if defined(RISTRA_ENABLE_GRAPHVIZ)
+#if defined(RISTRAUTILS_ENABLE_GRAPHVIZ)
 #include <ristra-utils/utils/graphviz.h>
 #endif
 
@@ -122,7 +122,7 @@ private:
 
 }; // struct phase_walker__
 
-#if defined(RISTRA_ENABLE_GRAPHVIZ)
+#if defined(RISTRAUTILS_ENABLE_GRAPHVIZ)
 
 /*!
   The phase_writer__ class allows execution of statically-defined
@@ -218,7 +218,7 @@ private:
 
 }; // struct phase_writer__
 
-#endif // RISTRA_ENABLE_GRAPHVIZ
+#endif // RISTRAUTILS_ENABLE_GRAPHVIZ
 
 } // namespace control
 } // namespace ristra

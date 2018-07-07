@@ -17,6 +17,7 @@ namespace utils {
   
   @ingroup utils
  */
+
 class const_string_t {
 public:
   using hash_type_t = std::size_t;
@@ -26,6 +27,7 @@ public:
    
     @param str A string literal.
    */
+
   template<hash_type_t N>
   constexpr const_string_t(const char (&str)[N])
       : str_(str), size_(N - 1) {} // const_string_t
@@ -33,6 +35,7 @@ public:
   /*!
     Return the string literal for this const_string_t.
    */
+
   constexpr const char * c_str() const {
     return str_;
   } // c_str
@@ -40,6 +43,7 @@ public:
   /*!
     Return the size of the string literal.
    */
+
   constexpr hash_type_t size() const {
     return size_;
   } // size
@@ -47,6 +51,7 @@ public:
   /*!
     Array accessor to string literal.
    */
+
   constexpr char operator[](const hash_type_t i) const {
     return i < size_ ? str_[i] : throw std::out_of_range("invalid index");
   } // operator []
@@ -54,6 +59,7 @@ public:
   /*!
     Return the hash for the string literal.
    */
+
   constexpr hash_type_t hash() const {
     return ristra::utils::string_hash<hash_type_t>(str_, size_);
   } // hash
@@ -87,9 +93,12 @@ private:
 
 /*!
  */
+
 struct const_string_hasher_t {
+
   /*!
    */
+
   std::size_t operator()(const const_string_t & str) const {
     return str.hash();
   } // operator ()

@@ -8,6 +8,7 @@ set(utils_HEADERS
   const_string.h
   dag.h
   graphviz.h
+  macros.h
   tuple_walker.h
   typeify.h
   PARENT_SCOPE
