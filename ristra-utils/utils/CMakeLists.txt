@@ -38,3 +38,12 @@ set(utils_SOURCES
 #  SOURCES test/hash.cc
 #  FOLDER "Tests/Util"
 #)
+
+cinch_add_unit(tuple_walker
+  SOURCES
+    test/tuple_walker.cc
+  INPUTS
+    test/tuple_walker.blessed
+  FOLDER
+    "Tests/Util"
+)
