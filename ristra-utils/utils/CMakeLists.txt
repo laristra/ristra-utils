@@ -8,8 +8,10 @@ set(utils_HEADERS
   const_string.h
   dag.h
   demangle.h
+  function_traits.h
   graphviz.h
   macros.h
+  tuple_visit.h
   tuple_walker.h
   typeify.h
   PARENT_SCOPE
@@ -38,3 +40,12 @@ set(utils_SOURCES
 #  SOURCES test/hash.cc
 #  FOLDER "Tests/Util"
 #)
+
+cinch_add_unit(tuple_walker
+  SOURCES
+    test/tuple_walker.cc
+  INPUTS
+    test/tuple_walker.blessed
+  FOLDER
+    "Tests/Util"
+)
