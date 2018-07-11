@@ -22,24 +22,57 @@ cinch_minimum_required(1.0)
 project(RistraUtils)
 
 #------------------------------------------------------------------------------#
+# Automatic version creation.
+#------------------------------------------------------------------------------#
+
+include(version)
+message(STATUS "VERSION: ${${PROJECT_NAME}_VERSION}")
+
+#------------------------------------------------------------------------------#
 # Set header suffix regular expression
 #------------------------------------------------------------------------------#
 
 set(CINCH_HEADER_SUFFIXES "\\.h")
 
 #------------------------------------------------------------------------------#
-# Check for C++17 compiler.
+# Set required C++ standard
 #------------------------------------------------------------------------------#
 
-include(cxx17)
+set(CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
 
-check_for_cxx17_compiler(CXX17_COMPILER)
+#------------------------------------------------------------------------------#
+# Create developer guide header with version information
+#------------------------------------------------------------------------------#
 
-if(CXX17_COMPILER)
-	enable_cxx17()
-else()
-	message(FATAL_ERROR "C++17 compatible compiler not found")
-endif()
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doc/ristra_dg_header.tex.in
+#    ${CMAKE_BINARY_DIR}/doc/ristra_dg_header.tex
+#)
+
+#------------------------------------------------------------------------------#
+# Pandoc options for developer guide
+#------------------------------------------------------------------------------#
+
+#set(dg_pandoc_options
+#    "--toc"
+#    "--include-in-header=${CMAKE_SOURCE_DIR}/cinch/tex/addtolength.tex"
+#    "--include-in-header=${CMAKE_BINARY_DIR}/doc/ristra_dg_header.tex"
+#    "--include-before-body=${CMAKE_CURRENT_SOURCE_DIR}/doc/ristra_dg_title.tex"
+#    "--include-before-body=${CMAKE_SOURCE_DIR}/cinch/tex/firstpageempty.tex"
+#)
+
+#set(dg_image_list "${CMAKE_SOURCE_DIR}/doc/medium-ristra.png")
+
+#------------------------------------------------------------------------------#
+# Add developer guide target
+#------------------------------------------------------------------------------#
+
+#cinch_add_doc(ristra-developer-guide ristra_dg.py "ristra;auxiliary"
+#    ristra-developer-guide-${${PROJECT_NAME}_VERSION}.pdf
+#    PANDOC_OPTIONS ${dg_pandoc_options}
+#    # IMAGE_GLOB "*.pdf"
+#    #    IMAGE_LIST ${dg_image_list}
+#)
 
 #------------------------------------------------------------------------------#
 # Load cinch extras
