@@ -6,6 +6,7 @@
 set(utils_HEADERS
   hash.h
   const_string.h
+  debruijn.h
   dag.h
   demangle.h
   function_traits.h
@@ -18,6 +19,7 @@ set(utils_HEADERS
 )
 
 set(utils_SOURCES
+  debruijn.cc
   demangle.cc
   PARENT_SCOPE
 )
@@ -40,6 +42,14 @@ set(utils_SOURCES
 #  SOURCES test/hash.cc
 #  FOLDER "Tests/Util"
 #)
+
+cinch_add_unit(debruijn
+  SOURCES
+    debruijn.cc
+    test/debruijn.cc
+  FOLDER
+    "Tests/Util"
+)
 
 cinch_add_unit(tuple_walker
   SOURCES
