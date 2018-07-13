@@ -12,13 +12,10 @@
  * All rights reserved
  *~-------------------------------------------------------------------------~~*/
 
-// includes: flecsi
-#include <flecsi/utils/debruijn.h>
+#include <ristra-utils/utils/debruijn.h>
 
-// includes: C++
 #include <random>
 
-// includes: other
 #include <cinchtest.h>
 
 // =============================================================================
@@ -28,7 +25,7 @@
 // TEST
 TEST(debruijn, all) {
 
-  using flecsi::utils::debruijn32_t;
+  using ristra::utils::debruijn32_t;
 
   // index()
   // For: 0, 1, 2

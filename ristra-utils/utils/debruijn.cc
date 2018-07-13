@@ -13,10 +13,10 @@
 
 #include "debruijn.h"
 
-namespace flecsi {
+namespace ristra {
 namespace utils {
 
 constexpr uint32_t debruijn32_t::index_[];
 
 } // namespace utils
-} // namespace flecsi
+} // namespace ristra
