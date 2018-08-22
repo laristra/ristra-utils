@@ -12,12 +12,12 @@
 
 /*! @file */
 
+#include <ristra-utils/control/phase_walker.h>
+#include <ristra-utils/utils/dag.h>
+
 #include <functional>
 #include <map>
 #include <vector>
-
-#include <ristra-utils/control/phase_walker.h>
-#include <ristra-utils/utils/dag.h>
 
 #include <ristra-utils-config.h>
 
@@ -30,14 +30,14 @@ namespace control {
 template<typename CONTROL_POLICY>
 struct control__ : public CONTROL_POLICY {
 
+  using dag_t = ristra::utils::dag__<typename CONTROL_POLICY::node_t>;
+  using node_t = typename dag_t::node_t;
+  using phase_walker_t = phase_walker__<control__<CONTROL_POLICY>>;
+
   static control__ & instance() {
     static control__ c;
     return c;
   } // instance
-
-  using dag_t = ristra::utils::dag__<typename CONTROL_POLICY::node_t>;
-  using node_t = typename dag_t::node_t;
-  using phase_walker_t = phase_walker__<control__<CONTROL_POLICY>>;
 
   static int execute(int argc, char ** argv) {
     instance().sort_phases();
