@@ -51,3 +51,6 @@ add_executable(runtime
   runtime_main.cc
   test/runtimes.cc
 )
+
+target_link_libraries(runtime ${CINCH_RUNTIME_LIBRARIES}
+  ${CMAKE_THREAD_LIBS_INIT})
