@@ -49,7 +49,7 @@ cinch_add_unit(control
 
 add_executable(runtime
   runtime_main.cc
-  test/runtimes.cc
+  test/runtime_model.cc
 )
 
 target_link_libraries(runtime ${CINCH_RUNTIME_LIBRARIES}

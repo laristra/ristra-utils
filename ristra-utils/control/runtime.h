@@ -26,6 +26,16 @@ enum runtime_exit_mode_t : size_t {
 }; // enum runtime_exit_mode_t
 
 /*!
+  Type to define runtime initialization and finalization handlers.
+ */
+
+struct runtime_handler_t {
+  std::function<int(int, char **)> initialize;
+  std::function<int(int, char **, runtime_exit_mode_t)> finalize;
+  std::function<bool(int, char **)> output;
+}; // struct runtime_handler_t
+
+/*!
  */
 
 struct runtime_t {
@@ -48,21 +58,20 @@ struct runtime_t {
   } // driver
 
   /*!
-    Type to define runtime initialization and finalization handlers.
+    Append the given runtime handler to the vector of handlers. Handlers
+    will be executed in the order in which they are appended.
    */
-
-  struct runtime_handler_t {
-    std::function<int(int, char **)> initialize;
-    std::function<int(int, char **, runtime_exit_mode_t)> finalize;
-    std::function<bool(int, char **)> output;
-  }; // struct runtime_handler_t
+  bool append_runtime_handler(runtime_handler_t const & handler) {
+    handlers_.push_back(handler);
+    return true;
+  } // register_runtime_handler
 
   /*!
     Access the runtime handler vector.
    */
 
   std::vector<runtime_handler_t> & runtimes() {
-    return runtimes_;
+    return handlers_;
   } // runtimes
 
   /*!
@@ -70,7 +79,7 @@ struct runtime_t {
    */
 
   void initialize_runtimes(int argc, char ** argv) {
-    for(auto r: runtimes_) {
+    for(auto r: handlers_) {
       r.initialize(argc, argv);
     } // for
   } // initialize_runtimes
@@ -82,7 +91,7 @@ struct runtime_t {
   int finalize_runtimes(int argc, char ** argv, runtime_exit_mode_t mode) {
     int result{0};
 
-    for(auto r: runtimes_) {
+    for(auto r: handlers_) {
       result |= r.finalize(argc, argv, mode);
     } // for
 
@@ -97,7 +106,7 @@ struct runtime_t {
   bool participate_in_output(int argc, char ** argv) {
     bool result{true};
 
-    for(auto r: runtimes_) {
+    for(auto r: handlers_) {
       result = r.output(argc, argv) ? result : false;
     } // for
 
@@ -108,9 +117,42 @@ private:
 
   std::string program_;
   std::function<int(int, char **)> driver_;
-  std::vector<runtime_handler_t> runtimes_;
+  std::vector<runtime_handler_t> handlers_;
 
 }; // runtime_t
 
 } // namespace ristra
 } // namespace control
+
+/*!
+  @def ristra_register_runtime_driver(driver)
+
+  Register the primary runtime driver function.
+
+  @param driver The primary driver with a 'int(int, char **)' signature
+                that should be invoked by the Ristra runtime.
+ */
+
+#define ristra_register_runtime_driver(driver)                                 \
+  /* MACRO IMPLEMENTATION */                                                   \
+                                                                               \
+  inline bool ristra_registered_driver_##driver =                              \
+    ristra::control::runtime_t::instance().register_driver(driver)
+
+/*!
+  @def ristra_register_runtime_handler(handler)
+
+  Register a runtime handler with the Ristra runtime. Runtime handlers
+  are invoked at fixed control points in the Ristra control model for
+  initialization, finalization, and output participation. The finalization
+  function has an additional argument that specifies the exit mode.
+
+  @param handler A runtime_handler_t that references the appropriate
+                 initialize, finalize, and output functions.                
+ */
+
+#define ristra_append_runtime_handler(handler)                                 \
+  /* MACRO DEFINITION */                                                       \
+                                                                               \
+  inline bool ristra_append_runtime_handler_##handler =                        \
+    ristra::control::runtime_t::instance().append_runtime_handler(handler)

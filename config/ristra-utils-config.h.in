@@ -17,3 +17,9 @@
 #define RISTRAUTILS_IO_DRIVER_hdf5 0
 #define RISTRAUTILS_IO_DRIVER_design 1
 #cmakedefine RISTRAUTILS_IO_DRIVER RISTRAUTILS_IO_DRIVER_@RISTRAUTILS_IO_DRIVER@
+
+//----------------------------------------------------------------------------//
+// Boost.ProgramOptions
+//----------------------------------------------------------------------------//
+
+#cmakedefine RISTRA_UTILS_ENABLE_BOOST_PROGRAM_OPTIONS

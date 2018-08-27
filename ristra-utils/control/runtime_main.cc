@@ -11,13 +11,15 @@
 
 /*! @file */
 
+#include <ristra-utils-config.h>
+
 #include <cinchlog.h>
 #include <ristra-utils/control/runtime.h>
 
 #include <iostream>
 #include <string>
 
-#if defined(RISTRA_ENABLE_BOOST_PROGRAM_OPTIONS)
+#if defined(RISTRA_UTILS_ENABLE_BOOST_PROGRAM_OPTIONS)
   #include <boost/program_options.hpp>
   using namespace boost::program_options;
 #endif
@@ -40,7 +42,7 @@ int main(int argc, char ** argv) {
   // Initialize clog tags to output all tag groups
   std::string tags("all");
 
-#if defined(RISTRA_ENABLE_BOOST_PROGRAM_OPTIONS)
+#if defined(RISTRA_UTILS_ENABLE_BOOST_PROGRAM_OPTIONS)
   options_description desc("FIXME");
 
     // Add command-line options
@@ -63,7 +65,7 @@ int main(int argc, char ** argv) {
     collect_unrecognized(parsed.options, include_positional);
 
   if(unrecog_options.size()) {
-    if(rank == 0) {
+    if(runtime_.participate_in_output(argc, argv)) {
       std::cout << std::endl << "Unrecognized options: ";
       for ( int i=0; i<unrecog_options.size(); ++i ) {
         std::cout << unrecog_options[i] << " ";
@@ -76,7 +78,7 @@ int main(int argc, char ** argv) {
   } // if
 
   if(vm.count("help")) {
-    if(rank == 0) {
+    if(runtime_.participate_in_output(argc, argv)) {
       std::cout << desc << std::endl;
     } // if
 

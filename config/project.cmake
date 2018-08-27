@@ -78,22 +78,37 @@ set(CMAKE_CXX_STANDARD 17)
 # Load cinch extras
 #------------------------------------------------------------------------------#
 
+# After we load the cinch options, we need to capture the configuration
+# state for the particular Cinch build configuration and set variables that
+# are local to this project. RistraUtils should never directly use the raw
+# options, e.g., ENABLE_OPTION should be captured as RISTRA_UTILS_ENABLE_OPTION
+# and used as such in the code. This will handle collisions between nested
+# projects that use Cinch.
+
 cinch_load_extras()
+
+get_cmake_property(_variableNames VARIABLES)
+string (REGEX MATCHALL "(^|;)ENABLE_[A-Za-z0-9_]*"
+  _matchedVars "${_variableNames}")
+
+foreach(_variableName ${_matchedVars})
+  set(RISTRA_UTILS_${_variableName} ${${_variableName}})
+endforeach()
 
 #------------------------------------------------------------------------------#
 # Add options for driver selection
 #------------------------------------------------------------------------------#
 
-set(RISTRAUTILS_IO_DRIVERS design hdf5)
+set(RISTRA_UTILS_IO_DRIVERS design hdf5)
 
-if(NOT RISTRAUTILS_IO_DRIVER)
-  list(GET RISTRAUTILS_IO_DRIVERS 0 RISTRAUTILS_IO_DRIVER)
+if(NOT RISTRA_UTILS_IO_DRIVER)
+  list(GET RISTRA_UTILS_IO_DRIVERS 0 RISTRA_UTILS_IO_DRIVER)
 endif()
 
-set(RISTRAUTILS_IO_DRIVER "${RISTRAUTILS_IO_DRIVER}" CACHE STRING
+set(RISTRA_UTILS_IO_DRIVER "${RISTRA_UTILS_IO_DRIVER}" CACHE STRING
   "Select the driver")
-set_property(CACHE RISTRAUTILS_IO_DRIVER PROPERTY STRINGS
-  ${RISTRAUTILS_IO_DRIVERS})
+set_property(CACHE RISTRA_UTILS_IO_DRIVER PROPERTY STRINGS
+  ${RISTRA_UTILS_IO_DRIVERS})
 
 #------------------------------------------------------------------------------#
 # Boost Filesystem
@@ -128,22 +143,22 @@ target_link_libraries(RistraUtils ${Boost_LIBRARIES})
 # Prepare variables for RistraUtilsConfig file.
 #------------------------------------------------------------------------------#
 
-set(RISTRAUTILS_EXTERNAL_INCLUDE_DIRS)
+set(RISTRA_UTILS_EXTERNAL_INCLUDE_DIRS)
 
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   PROPERTY INCLUDE_DIRECTORIES)
 
 foreach(dir ${dirs})
   if(NOT ${dir} MATCHES ${CMAKE_CURRENT_SOURCE_DIR})
-    list(APPEND RISTRAUTILS_EXTERNAL_INCLUDE_DIRS ${dir})
+    list(APPEND RISTRA_UTILS_EXTERNAL_INCLUDE_DIRS ${dir})
   endif()
 endforeach()
 
-set(RISTRAUTILS_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR})
-set(RISTRAUTILS_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include
-  ${RISTRAUTILS_EXTERNAL_INCLUDE_DIRS})
+set(RISTRA_UTILS_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR})
+set(RISTRA_UTILS_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include
+  ${RISTRA_UTILS_EXTERNAL_INCLUDE_DIRS})
 
-set(RISTRAUTILS_CMAKE_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR}/cmake/RistraUtils)
+set(RISTRA_UTILS_CMAKE_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR}/cmake/RistraUtils)
 
 #------------------------------------------------------------------------------#
 # Extract all project options so they can be exported to the
@@ -151,13 +166,13 @@ set(RISTRAUTILS_CMAKE_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR}/cmake/RistraUtils)
 #------------------------------------------------------------------------------#
 
 get_cmake_property(_variableNames VARIABLES)
-string(REGEX MATCHALL "(^|;)RISTRAUTILS_[A-Za-z0-9_]*"
+string(REGEX MATCHALL "(^|;)RISTRA_UTILS_[A-Za-z0-9_]*"
   _matchedVars "${_variableNames}"
 )
 
+message(STATUS "Matched: ${_matchedVars}")
 foreach(_variableName ${_matchedVars})
-  set(RISTRAUTILS_CONFIG_CODE
-    "${RISTRAUTILS_CONFIG_CODE}\nset(${_variableName} \"${${_variableName}}\")")
+  set(RISTRA_UTILS_CONFIG_CODE "${RISTRA_UTILS_CONFIG_CODE}\nset(${_variableName} \"${${_variableName}}\")")
 endforeach()
 
 #------------------------------------------------------------------------------#
@@ -180,12 +195,12 @@ configure_file(${PROJECT_SOURCE_DIR}/config/RistraUtilsConfig.cmake.in
 
 install(
   FILES ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/RistraUtilsConfig.cmake
-  DESTINATION ${RISTRAUTILS_CMAKE_DIR}
+  DESTINATION ${RISTRA_UTILS_CMAKE_DIR}
 )
 
 install(
   EXPORT RistraUtilsTargets
-  DESTINATION ${RISTRAUTILS_CMAKE_DIR}
+  DESTINATION ${RISTRA_UTILS_CMAKE_DIR}
   COMPONENT dev
 )
 
