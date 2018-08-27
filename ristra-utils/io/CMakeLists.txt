@@ -22,7 +22,7 @@ set(io_HEADERS
 set(io_SOURCES
 )
 
-if(RISTRAUTILS_IO_DRIVER STREQUAL "design")
+if(RISTRA_UTILS_IO_DRIVER STREQUAL "design")
 
   set(io_HEADERS
     ${io_HEADERS}
@@ -34,7 +34,7 @@ if(RISTRAUTILS_IO_DRIVER STREQUAL "design")
     design/driver_policy.cc
   )
 
-elseif(RISTRAUTILS_IO_DRIVER STREQUAL "hdf5")
+elseif(RISTRA_UTILS_IO_DRIVER STREQUAL "hdf5")
 
   set(io_HEADERS
     ${io_HEADERS}

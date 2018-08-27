@@ -14,8 +14,8 @@
 
 #include <ristra-utils-config.h>
 
-#if !defined(RISTRAUTILS_ENABLE_GRAPHVIZ)
-#error RISTRAUTILS_ENABLE_GRAPHVIZ not defined! This file depends on Graphviz!
+#if !defined(RISTRA_UTILS_ENABLE_GRAPHVIZ)
+#error RISTRA_UTILS_ENABLE_GRAPHVIZ not defined! This file depends on Graphviz!
 #endif
 
 #include <graphviz/gvc.h>

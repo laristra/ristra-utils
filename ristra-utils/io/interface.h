@@ -18,6 +18,10 @@
 namespace ristra {
 namespace io {
 
+struct record_t {
+  size_t id;
+}; // struct record_t
+
 template<typename IO_DRIVER_POLICY>
 struct interface__ : public IO_DRIVER_POLICY
 {
@@ -37,8 +41,15 @@ struct interface__ : public IO_DRIVER_POLICY
    */
 
   bool initialize_simulation(std::string path, std::string name) {
-    return true;
+    return IO_DRIVER_POLICY::initialize_simulation(path, name);
   } // initialize_simulation
+
+  /*!
+   */
+
+  void add_simulation_parameter(record_t & record) {
+    return IO_DRIVER_POLICY::add_simulation_parameter(record);
+  } // add_simulation_parameter
 
 }; // struct interface__
 
@@ -55,7 +66,7 @@ namespace io {
 /*!
  */
 
-using interface_t = interface__<RISTRAUTILS_IO_DRIVER_POLICY>;
+using interface_t = interface__<RISTRA_UTILS_IO_DRIVER_POLICY>;
 
 } // namespace io
 } // namespace ristra

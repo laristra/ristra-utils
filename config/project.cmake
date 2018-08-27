@@ -96,10 +96,28 @@ foreach(_variableName ${_matchedVars})
 endforeach()
 
 #------------------------------------------------------------------------------#
+# Graphviz
+#------------------------------------------------------------------------------#
+
+option(ENABLE_GRAPHVIZ "Enable Graphviz Support" OFF)
+
+if(ENABLE_GRAPHVIZ)
+  find_package(Graphviz REQUIRED)
+
+  if(GRAPHVIZ_FOUND)
+    include_directories(${GRAPHVIZ_INCLUDE_DIRS})
+    add_definitions(-DENABLE_GRAPHVIZ)
+
+    list(APPEND RISTRA_UTILS_INCLUDE_DEPENDENCIES ${GRAPHVIZ_INCLUDE_DIR})
+    list(APPEND RISTRA_UTILS_LIBRARY_DEPENDENCIES ${GRAPHVIZ_LIBRARIES})
+  endif()
+endif()
+
+#------------------------------------------------------------------------------#
 # Add options for driver selection
 #------------------------------------------------------------------------------#
 
-set(RISTRA_UTILS_IO_DRIVERS design hdf5)
+set(RISTRA_UTILS_IO_DRIVERS design hdf5 posix)
 
 if(NOT RISTRA_UTILS_IO_DRIVER)
   list(GET RISTRA_UTILS_IO_DRIVERS 0 RISTRA_UTILS_IO_DRIVER)
@@ -120,6 +138,8 @@ include_directories(${Boost_INCLUDE_DIRS})
 #------------------------------------------------------------------------------#
 # Configure header
 #------------------------------------------------------------------------------#
+
+set(RISTRA_UTILS_ENABLE_GRAPHVIZ ${ENABLE_GRAPHVIZ})
 
 configure_file(${PROJECT_SOURCE_DIR}/config/ristra-utils-config.h.in
   ${CMAKE_BINARY_DIR}/ristra-utils-config.h @ONLY)

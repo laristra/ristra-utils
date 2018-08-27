@@ -17,7 +17,19 @@ namespace io {
 
 struct hdf5_driver_policy_t {
 
-  void dummy();
+  bool initialize_simulation(std::string path, std::string name) {
+    path_ = path;
+    name_ = name;
+    return true;
+  } // initialize_simulation
+
+  void add_simulation_parameter(record_t & record) {
+  } // add_simulation_parameter
+
+private:
+
+  std::string path_;
+  std::string name_;
 
 }; // struct hdf5_driver_policy_t
 

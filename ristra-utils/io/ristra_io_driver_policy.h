@@ -18,23 +18,23 @@
 // This section works with the build system to select the correct driver
 // implemenation for the I/O model. If you add to the possible drivers,
 // remember to edit config/packages.cmake to include a definition using
-// the same convention, e.g., -DRISTRAUTILS_IO_DRIVER_new_driver.
+// the same convention, e.g., -DRISTRA_UTILS_IO_DRIVER_new_driver.
 //----------------------------------------------------------------------------//
 
 // HDF5 Policy
-#if RISTRAUTILS_IO_DRIVER == RISTRAUTILS_IO_DRIVER_hdf5
+#if RISTRA_UTILS_IO_DRIVER == RISTRA_UTILS_IO_DRIVER_hdf5
 
 #include <ristra-utils/io/hdf5/driver_policy.h>
 
 namespace ristra {
 namespace io {
 
-using RISTRAUTILS_IO_DRIVER_POLICY = hdf5_driver_policy_t;
+using RISTRA_UTILS_IO_DRIVER_POLICY = hdf5_driver_policy_t;
 
 } // namespace io
 } // namespace ristra
 
-#elif RISTRAUTILS_IO_DRIVER == RISTRAUTILS_IO_DRIVER_design
+#elif RISTRA_UTILS_IO_DRIVER == RISTRA_UTILS_IO_DRIVER_design
 
 //----------------------------------------------------------------------------//
 // THIS DRIVER IS INCLUDED TO AID IN INTERFACE DESIGN AND DEVELOPMENT. IT IS
@@ -48,7 +48,7 @@ using RISTRAUTILS_IO_DRIVER_POLICY = hdf5_driver_policy_t;
 namespace ristra {
 namespace io {
 
-using RISTRAUTILS_IO_DRIVER_POLICY = design_driver_policy_t;
+using RISTRA_UTILS_IO_DRIVER_POLICY = design_driver_policy_t;
 
 } // namespace io
 } // namespace ristra
