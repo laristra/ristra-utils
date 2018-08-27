@@ -170,7 +170,6 @@ string(REGEX MATCHALL "(^|;)RISTRA_UTILS_[A-Za-z0-9_]*"
   _matchedVars "${_variableNames}"
 )
 
-message(STATUS "Matched: ${_matchedVars}")
 foreach(_variableName ${_matchedVars})
   set(RISTRA_UTILS_CONFIG_CODE "${RISTRA_UTILS_CONFIG_CODE}\nset(${_variableName} \"${${_variableName}}\")")
 endforeach()
