@@ -12,20 +12,20 @@
 #------------------------------------------------------------------------------#
 # RistraUtils options.
 #------------------------------------------------------------------------------#
-@RISTRAUTILS_CONFIG_CODE@
+@RISTRA_UTILS_CONFIG_CODE@
 
 #------------------------------------------------------------------------------#
 # Set the path to the FleCSI headers.
 #------------------------------------------------------------------------------#
 
-set(RistraUtils_INCLUDE_DIRS @RISTRAUTILS_INCLUDE_DIRS@)
+set(RistraUtils_INCLUDE_DIRS @RISTRA_UTILS_INCLUDE_DIRS@)
 
 #------------------------------------------------------------------------------#
 # RistraUtils library dependencies (contains definitions for IMPORTED targets)
 #------------------------------------------------------------------------------#
 
 if(NOT TARGET RistraUtils AND NOT RistraUtils_BINARY_DIR)
-  include(@RISTRAUTILS_CMAKE_DIR@/RistraUtilsTargets.cmake)
+  include(@RISTRA_UTILS_CMAKE_DIR@/RistraUtilsTargets.cmake)
 endif()
 
 #------------------------------------------------------------------------------#

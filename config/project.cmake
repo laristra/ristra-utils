@@ -96,6 +96,12 @@ foreach(_variableName ${_matchedVars})
 endforeach()
 
 #------------------------------------------------------------------------------#
+# Globally shared variabels
+#------------------------------------------------------------------------------#
+
+set(RISTRA_UTILS_SHARE_DIR ${CMAKE_INSTALL_PREFIX}/share/RistraUtils)
+
+#------------------------------------------------------------------------------#
 # Graphviz
 #------------------------------------------------------------------------------#
 
@@ -179,6 +185,12 @@ set(RISTRA_UTILS_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include
   ${RISTRA_UTILS_EXTERNAL_INCLUDE_DIRS})
 
 set(RISTRA_UTILS_CMAKE_DIR ${CMAKE_INSTALL_PREFIX}/${LIBDIR}/cmake/RistraUtils)
+set(RISTRA_UTILS_RUNTIME_MAIN
+  ${RISTRA_UTILS_SHARE_DIR}/runtime/runtime_main.cc)
+
+# Install auxiliary files
+install(FILES ${PROJECT_SOURCE_DIR}/ristra-utils/control/runtime_main.cc
+  DESTINATION ${RISTRA_UTILS_SHARE_DIR}/runtime)
 
 #------------------------------------------------------------------------------#
 # Extract all project options so they can be exported to the
