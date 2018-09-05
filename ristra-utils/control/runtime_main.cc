@@ -43,7 +43,8 @@ int main(int argc, char ** argv) {
   std::string tags("all");
 
 #if defined(RISTRA_UTILS_ENABLE_BOOST_PROGRAM_OPTIONS)
-  options_description desc("FIXME");
+  std::string program(argv[0]);
+  options_description desc(program.substr(program.find('/')+1).c_str());
 
     // Add command-line options
   desc.add_options()
