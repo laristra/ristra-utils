@@ -15,7 +15,6 @@
 
 set(io_HEADERS
   interface.h
-  registry.h
   ristra_io_driver_policy.h
 )
 
@@ -73,16 +72,6 @@ set(io_SOURCES
 cinch_add_unit(interface
   SOURCES
     test/interface.cc
-  LIBRARIES
-    RistraUtils
-  POLICY
-    SERIAL
-  THREADS 1
-)
-
-cinch_add_unit(registry
-  SOURCES
-    test/registry.cc
   LIBRARIES
     RistraUtils
   POLICY

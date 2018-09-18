@@ -115,6 +115,9 @@ struct runtime_t {
 
 private:
 
+  // FIXME: Make the singleton safe.
+  runtime_t() {}
+
   std::string program_;
   std::function<int(int, char **)> driver_;
   std::vector<runtime_handler_t> handlers_;

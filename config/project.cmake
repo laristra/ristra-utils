@@ -26,7 +26,6 @@ project(RistraUtils)
 #------------------------------------------------------------------------------#
 
 include(version)
-message(STATUS "VERSION: ${${PROJECT_NAME}_VERSION}")
 
 #------------------------------------------------------------------------------#
 # Set header suffix regular expression
