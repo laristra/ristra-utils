@@ -11,6 +11,8 @@
 
 #include <cinchtest.h>
 
+#include <ristra-utils/io/interface.h>
+
 TEST(interface, sanity) {
 
 } // TEST

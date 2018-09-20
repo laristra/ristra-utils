@@ -25,6 +25,27 @@ struct record_t {
 template<typename IO_DRIVER_POLICY>
 struct interface__ : public IO_DRIVER_POLICY
 {
+
+  // Delete all of the ways that someone can attempt
+  // to construct one of these...
+  interface__() = delete;
+  interface__(const interface__ &) = delete;
+  void operator = (const interface__ &) = delete;
+  ~interface__() = delete;
+
+  /*!
+   Meyer's singleton instance.
+
+   @return The single instance of this type.
+   */
+
+  static interface__ & instance() {
+    static interface__ interface;
+    return interface;
+  } // instance
+
+private:
+
 }; // struct interface__
 
 } // namespace io
