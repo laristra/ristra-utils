@@ -35,20 +35,16 @@ set(utils_SOURCES
 
 #cinch_add_unit(const_string
 #  SOURCES test/const_string.cc common.cc
-#  FOLDER "Tests/Util"
 #)
 
 #cinch_add_unit(hash
 #  SOURCES test/hash.cc
-#  FOLDER "Tests/Util"
 #)
 
 cinch_add_unit(debruijn
   SOURCES
     debruijn.cc
     test/debruijn.cc
-  FOLDER
-    "Tests/Util"
 )
 
 cinch_add_unit(tuple_walker
@@ -56,6 +52,4 @@ cinch_add_unit(tuple_walker
     test/tuple_walker.cc
   INPUTS
     test/tuple_walker.blessed
-  FOLDER
-    "Tests/Util"
 )
